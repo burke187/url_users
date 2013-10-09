@@ -1,7 +1,20 @@
 <div class="container">
   <h1>Welcome to Sinatra!</h1>
-  <p>Hello, world!</p>
+  <p>Hello, ass-hats!</p>
 
+  <form action='/urls' method='post'>
+    <input type='text' name='link' placeholder='e.g. http://www.google.com'>
+    <input type='submit' value='Shoten!'>
+  </form>
+  <br>
+  <br>
+
+  <% Url.all.each do |url| %>
+    <br>
+   <a href= "/<%=url.short_link%>" > <%= url.short_link %> </a>
+  <%end%>
+  <br>
+  <br>
   <table>
     <tr>
       <th>File Description</th>
