@@ -1,0 +1,18 @@
+<div class="container">
+  
+  <p>Hello, <%=@current_user.name%></p>
+
+  <form action='/urls' method='post'>
+    <input type='text' name='link' placeholder='e.g. http://www.google.com'>
+    <input type='submit' value='Shoten!'>
+  </form>
+  <br>
+  <br>
+  <% Url.where('user_id=?', @current_user.id).each do |url| %>
+    <br>
+   <a href= "/<%=url.short_link%>" > <%= url.short_link %> </a> <%= url.link %>
+  <%end%>
+  <br>
+  <br>
+  
+</div>

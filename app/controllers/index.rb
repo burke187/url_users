@@ -1,5 +1,14 @@
 enable :sessions
 
+get '/users/:id' do
+  if current_user
+    erb :user_page
+  else
+    erb :index
+  end
+end
+
+
 get '/' do
   erb :index
 end
@@ -10,27 +19,22 @@ end
 
 post '/create' do
  user = User.create(params[:creation])
- session[:user] = user
- redirect('/secret')
-end
-
-get '/secret' do
-  if session[:user]
-    erb :secret
-  else
-    erb :index
-  end
+ session[:user_id] = user.id
+ current_user
+ redirect("/users/#{@current_user.id}")
 end
 
 post '/' do
   if params[:logout]
-    session[:user] = nil
+    session[:user_id] = nil
+    @current_user = nil
     erb :index
   elsif params[:email] && params[:password]
     authentication = User.authenticate(params[:email], params[:password])
     if authentication
-      session[:user] = authentication
-      redirect('/secret')
+      session[:user_id] = authentication.id
+      current_user
+      redirect("/users/#{authentication.id}")
     else
       redirect('/')
     end

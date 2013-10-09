@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
 
   has_many :urls, dependent: :destroy 
 
+  
+
   def self.authenticate(email, password)
     results = User.where('email=?', email).where('password=?', password)
       if results == []
