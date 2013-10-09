@@ -2,7 +2,7 @@
   
   <p>Hello, <%=@current_user.name%></p>
 
-  <form action='/urls' method='post'>
+  <form action='/urls?user_id=<%=@current_user.id%>' method='post'>
     <input type='text' name='link' placeholder='e.g. http://www.google.com'>
     <input type='submit' value='Shoten!'>
   </form>
@@ -10,7 +10,7 @@
   <br>
   <% Url.where('user_id=?', @current_user.id).each do |url| %>
     <br>
-   <a href= "/<%=url.short_link%>" > <%= url.short_link %> </a> <%= url.link %>
+   <a href= "/<%=url.short_link%>" > <%= url.short_link %> </a> <%= url.link %> <%=url.count%>
   <%end%>
   <br>
   <br>

@@ -44,13 +44,21 @@ end
 #####################################################
 
 post '/urls' do
-  Url.create(link: params[:link])
-  redirect('/')
+  Url.create(link: params[:link], user_id: params[:user_id])
+  if current_user
+    redirect("users/#{@current_user.id}")
+  else
+    redirect('/')
+  end
 end
 
 get '/:short_link' do
   url_object = Url.where('short_link=?', params[:short_link])
   if url_object != []
+    puts url_object[0].count
+    url_object[0].count += 1
+    url_object[0].save
+    puts url_object[0].count
     redirect("#{url_object[0].link}")
   else
     redirect("/")
