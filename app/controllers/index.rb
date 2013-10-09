@@ -4,6 +4,10 @@ get '/' do
   erb :index
 end
 
+get '/create' do
+  erb :create
+end
+
 post '/create' do
  user = User.create(params[:creation])
  session[:user] = user
